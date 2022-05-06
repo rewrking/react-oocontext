@@ -8,12 +8,14 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org/"
       - name: "Remove old node_modules (if applicable)"
         run: rm -rf node_modules
       - name: "Remove sources"
@@ -22,5 +24,3 @@ jobs:
         run: |
           npm install
           npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
