@@ -12,7 +12,7 @@ Under the hood, this uses React's `useReducer` hook, along with the React contex
 | `createStore` | A method that creates a store out of a state class |
 | `makeRootStoreProvider` | (optional) A method that takes in a number of store providers and returns a nested provider (less tedious than nesting them manually) |
 
-Example 1: Defining a state class
+Example 1: Define a state class
 
 ```ts
 import { BaseState, Action } from "react-oocontext";
