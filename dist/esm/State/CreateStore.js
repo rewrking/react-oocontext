@@ -41,7 +41,7 @@ export function createStore(classConstructor) {
         var newInst = new (classConstructor.bind.apply(classConstructor, __spreadArray([void 0], args, false)))();
         for (var _i = 0, _a = Object.entries(newInst); _i < _a.length; _i++) {
             var _b = _a[_i], key = _b[0], value = _b[1];
-            if (typeof value === "function" || key === "dispatch")
+            if (typeof value === "function" || key === "_oocontext")
                 continue;
             state[key] = value;
         }
@@ -58,10 +58,10 @@ export function createStore(classConstructor) {
     var Provider = function (props) {
         var _a = useReducer(reducer, undefined, getValue), state = _a[0], dispatcher = _a[1];
         useIsomorphicLayoutEffect(function () {
-            // dispatch is private, so inst is cast to any to get around it
-            getValue().dispatch = dispatcher;
+            // dispatcher is private, so inst is cast to any to get around it
+            getValue()._oocontext.dispatcher = dispatcher;
             return function () {
-                getValue().dispatch = null;
+                getValue()._oocontext.dispatcher = null;
                 ctx = null;
             };
             // eslint-disable-next-line
@@ -79,8 +79,7 @@ export function createStore(classConstructor) {
     // Public getter
     var getInstance = function () {
         var value = getValue();
-        console.log(value);
-        if (value.dispatch === null) {
+        if (value._oocontext.dispatcher === null) {
             throw new Error("Store getter for ".concat(classConstructor.name, " called outside of its context."));
         }
         return value;

@@ -6,7 +6,7 @@ on:
       - "v*"
 
 jobs:
-  publish:
+  "🍍 Publish version":
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -16,11 +16,9 @@ jobs:
         with:
           node-version: "16.x"
           registry-url: "https://registry.npmjs.org/"
-      - name: "Remove old node_modules (if applicable)"
-        run: rm -rf node_modules
-      - name: "Remove sources"
-        run: rm -rf src .vscode .github tsconfig.json tsconfig-cjs.json .prettierrc
-      - name: "Publish"
+      - name: "🧹 Remove development files"
+        run: rm -rf node_modules src .vscode .github tsconfig.json tsconfig-cjs.json .prettierrc push_version.sh
+      - name: "🚀 Publish"
         run: |
           npm install
           npm publish --access public

@@ -28,7 +28,7 @@ export function createStore<T extends BaseState>(
 		}
 		const newInst = new classConstructor(...args);
 		for (const [key, value] of Object.entries(newInst)) {
-			if (typeof value === "function" || key === "dispatch") continue;
+			if (typeof value === "function" || key === "_oocontext") continue;
 			state[key] = value;
 		}
 		return state;
@@ -48,11 +48,11 @@ export function createStore<T extends BaseState>(
 		const [state, dispatcher] = useReducer(reducer, undefined, getValue);
 
 		useIsomorphicLayoutEffect(() => {
-			// dispatch is private, so inst is cast to any to get around it
-			(getValue() as any).dispatch = dispatcher;
+			// dispatcher is private, so inst is cast to any to get around it
+			(getValue() as any)._oocontext.dispatcher = dispatcher;
 
 			return () => {
-				(getValue() as any).dispatch = null;
+				(getValue() as any)._oocontext.dispatcher = null;
 				ctx = null;
 			};
 			// eslint-disable-next-line
@@ -73,8 +73,7 @@ export function createStore<T extends BaseState>(
 	// Public getter
 	const getInstance = (): T => {
 		const value = getValue();
-		console.log(value);
-		if ((value as any).dispatch === null) {
+		if ((value as any)._oocontext.dispatcher === null) {
 			throw new Error(`Store getter for ${classConstructor.name} called outside of its context.`);
 		}
 		return value;

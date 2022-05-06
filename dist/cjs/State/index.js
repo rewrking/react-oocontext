@@ -14,4 +14,5 @@ __exportStar(require("./BaseState"), exports);
 __exportStar(require("./CreateStore"), exports);
 __exportStar(require("./ActionType"), exports);
 __exportStar(require("./RootStoreProvider"), exports);
+__exportStar(require("./ActionDecorator"), exports);
 //# sourceMappingURL=index.js.map
