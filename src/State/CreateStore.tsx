@@ -1,10 +1,13 @@
-import React, { useReducer, useContext, useEffect, PropsWithChildren } from "react";
+import React, { useReducer, useContext, useEffect, useLayoutEffect, PropsWithChildren } from "react";
 
 import { BaseState } from "./BaseState";
 import { ClassType, Optional } from "../Types";
 import { ActionEvent, ActionType } from "./ActionType";
 
 export type StoreProvider = (props: PropsWithChildren<object>) => JSX.Element;
+
+const canUseDOM = typeof window !== "undefined";
+const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect;
 
 export function createStore<T extends BaseState>(
 	classConstructor: ClassType<T>,
@@ -44,7 +47,7 @@ export function createStore<T extends BaseState>(
 	const Provider = (props: PropsWithChildren<object>) => {
 		const [state, dispatcher] = useReducer(reducer, undefined, getValue);
 
-		useEffect(() => {
+		useIsomorphicLayoutEffect(() => {
 			// dispatch is private, so inst is cast to any to get around it
 			(getValue() as any).dispatch = dispatcher;
 
@@ -70,6 +73,7 @@ export function createStore<T extends BaseState>(
 	// Public getter
 	const getInstance = (): T => {
 		const value = getValue();
+		console.log(value);
 		if ((value as any).dispatch === null) {
 			throw new Error(`Store getter for ${classConstructor.name} called outside of its context.`);
 		}

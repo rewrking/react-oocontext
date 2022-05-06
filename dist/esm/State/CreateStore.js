@@ -18,8 +18,10 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-import React, { useReducer, useContext, useEffect } from "react";
+import React, { useReducer, useContext, useEffect, useLayoutEffect } from "react";
 import { ActionType } from "./ActionType";
+var canUseDOM = typeof window !== "undefined";
+var useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect;
 export function createStore(classConstructor) {
     var args = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -55,7 +57,7 @@ export function createStore(classConstructor) {
     };
     var Provider = function (props) {
         var _a = useReducer(reducer, undefined, getValue), state = _a[0], dispatcher = _a[1];
-        useEffect(function () {
+        useIsomorphicLayoutEffect(function () {
             // dispatch is private, so inst is cast to any to get around it
             getValue().dispatch = dispatcher;
             return function () {
@@ -77,6 +79,7 @@ export function createStore(classConstructor) {
     // Public getter
     var getInstance = function () {
         var value = getValue();
+        console.log(value);
         if (value.dispatch === null) {
             throw new Error("Store getter for ".concat(classConstructor.name, " called outside of its context."));
         }
