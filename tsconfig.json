@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "ES2020",
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "sourceMap": true,
+        "outDir": "./dist/esm",
+        "moduleResolution": "node",
+        "declaration": true,
+        "composite": false,
+        "removeComments": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "preserveWatchOutput": true,
+        "preserveConstEnums": true,
+        "skipLibCheck": true,
+        "jsx": "react",
+        "baseUrl": "./src"
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

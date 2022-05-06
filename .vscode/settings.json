@@ -1,0 +1,27 @@
+{
+	"editor.formatOnSave": true,
+	"files.encoding": "utf8",
+	"files.exclude": {
+		"**/.DS_Store": true,
+		// "dist/": true
+	},
+	"search.exclude": {
+		"dist/": true
+	},
+	"[source.css.styled]": {
+		"editor.formatOnSave": true
+	},
+	"[markdown]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": true,
+		"editor.defaultFormatter": "vscode.markdown-language-features"
+	},
+	"[json]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[jsonc]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "vscode.json-language-features"
+	}
+}
