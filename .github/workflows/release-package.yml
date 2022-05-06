@@ -12,8 +12,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: 14
           registry-url: "https://registry.npmjs.org"
+      - name: "Remove old node_modules (if applicable)"
+        run: rm -rf node_modules
       - name: "Remove sources"
         run: rm -rf src .vscode .github tsconfig.json tsconfig-cjs.json .prettierrc
       - name: "Publish"
@@ -21,4 +23,4 @@ jobs:
           npm install
           npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
