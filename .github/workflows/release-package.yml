@@ -16,16 +16,18 @@ jobs:
     runs-on: ubuntu-latest
     environment: Publish
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "16.15.0"
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
       - name: "Remove old node_modules"
         run: rm -rf node_modules
       - name: "Remove sources"
         run: rm -rf src .vscode .github tsconfig.json tsconfig-cjs.json .prettierrc
       - name: "Publish"
-        run: npm install
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm ci
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
