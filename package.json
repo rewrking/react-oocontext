@@ -10,9 +10,6 @@
 	"scripts": {
 		"build": "rm -rf dist && mkdir dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
 	},
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com"
-	},
 	"repository": {
 		"url": "git@github.com:rewrking/react-oocontext.git"
 	},
