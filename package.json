@@ -14,7 +14,7 @@
 		"registry": "https://npm.pkg.github.com"
 	},
 	"repository": {
-		"url": "git@github.com:rewrking/react-kitchen.git"
+		"url": "git@github.com:rewrking/react-oocontext.git"
 	},
 	"keywords": [
 		"typescript",
