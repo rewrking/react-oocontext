@@ -1,4 +1,4 @@
-name: react-oocontext
+name: "🍍 Publish version"
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - "v*"
 
 jobs:
-  - name: "🍍 Publish version":
+  publish:
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
