@@ -21,13 +21,13 @@ jobs:
         with:
           node-version: "16.x"
           registry-url: "https://registry.npmjs.org"
-      - name: "Remove old node_modules"
+      - name: "Remove old node_modules (if applicable)"
         run: rm -rf node_modules
       - name: "Remove sources"
         run: rm -rf src .vscode .github tsconfig.json tsconfig-cjs.json .prettierrc
       - name: "Publish"
         run: |
-          npm ci
+          npm install
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
