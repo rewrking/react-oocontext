@@ -46,15 +46,20 @@ import { createStore, makeRootStoreProvider } from "react-oocontext";
 import { CounterState } from "./CounterState";
 import { JokeState } from "./JokeState";
 
-// Return type is [Provider, hook, getter]
-// With the store getter, you can directly call a state action from another state, or wherever an action needs to be called. It is recommended to keep it within thee context of the provider. Use the hook in components that require state changes
-const [CounterProvider, useCounterStore, getCounterStore] = createStore(CounterState, 1, 10); // also takes constructor args
+// The return type of createStore is [Provider, hook, getter]
+// With the store getter, you can directly call a state action from another state, 
+//   or wherever an action needs to be called. It is recommended to keep it within 
+//   the context of the provider. Use the hook in components that require state changes
 const [JokeStoreProvider, useJokeStore, getJokeStore] = createStore(JokeState);
 
-// Providers would be wrapped around anything that needs these states, or if globally, your root component
-const Providers = makeRootStoreProvider([CounterProvider, JokeStoreProvider]);
+ // Constructure arguments can be passed into createStore:
+const [CounterProvider, useCounterStore, getCounterStore] = createStore(CounterState, 1, 10);
 
-export { Providers, useCounterStore, getCounterStore, useJokeStore, getJokeStore };
+// Providers would be wrapped around anything that needs these states, 
+//   or if globally, your root component
+const Providers = makeRootStoreProvider([JokeStoreProvider, CounterProvider]);
+
+export { Providers, useJokeStore, getJokeStore, useCounterStore, getCounterStore };
 ```
 
 Example 3: Importing the providers into your app
