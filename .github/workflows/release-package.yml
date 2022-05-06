@@ -1,0 +1,37 @@
+name: react-oocontext
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [created]
+
+jobs:
+  get-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          sudo apt-get install yarn
+
+  publish:
+    needs: get-dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "16.15.0"
+      - name: "Update package version"
+        run: |
+          yarn version --patch
+          git push --tags
+          git push
+      - name: "Remove sources"
+        run: rm -rf src .vscode .github tsconfig.json tsconfig-cjs.json .prettierrc
+      - name: "Publish"
+        run: npm install
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
