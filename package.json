@@ -1,6 +1,6 @@
 {
 	"name": "react-oocontext",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Andrew R. King",
 	"description": "React state with classes and decorators",
 	"license": "MIT",
