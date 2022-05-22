@@ -15,7 +15,9 @@
 	},
 	"keywords": [
 		"typescript",
-		"react"
+		"react",
+		"context",
+		"state"
 	],
 	"peerDependencies": {
 		"react": ">=17.0.2"
