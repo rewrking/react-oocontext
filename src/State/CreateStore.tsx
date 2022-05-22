@@ -22,10 +22,7 @@ export function createStore<T extends BaseState>(
 		return (ctx as any)._currentValue as T;
 	};
 
-	const initialize = (state?: T): T => {
-		if (!state) {
-			state = getValue();
-		}
+	const initialize = (state: T): T => {
 		const newInst = new classConstructor(...args);
 		for (const [key, value] of Object.entries(newInst)) {
 			if (typeof value === "function" || key === "_oocontext") continue;
