@@ -2,9 +2,9 @@ type BabelPropertyDescriptor<T> = TypedPropertyDescriptor<T> & {
 	initializer?: Function;
 };
 
-function Action<T>(target: any, key: string, descriptor?: BabelPropertyDescriptor<T>): any {
+function Action<T>(prototype: any, key: string, descriptor?: BabelPropertyDescriptor<T>): any {
 	if (descriptor && descriptor.value === undefined && descriptor.initializer === undefined) {
-		throw new Error(`@Action decorator can only be applied to arrow functions (for now)`);
+		throw new Error(`@Action decorator can only be applied to class methods, not getters/setters`);
 	}
 
 	let initializer = descriptor?.initializer;
@@ -84,11 +84,11 @@ function Action<T>(target: any, key: string, descriptor?: BabelPropertyDescripto
 			},
 		};*/
 
-		if (target.constructor.actions === undefined) {
-			target.constructor.actions = [];
+		if (prototype.constructor.actions === undefined) {
+			prototype.constructor.actions = [];
 		}
-		if (!target.constructor.actions.includes(key)) {
-			target.constructor.actions.push(key);
+		if (!prototype.constructor.actions.includes(key)) {
+			prototype.constructor.actions.push(key);
 		}
 	}
 }

@@ -8,7 +8,7 @@ export type StoreProvider = (props: PropsWithChildren<object>) => JSX.Element;
 const canUseDOM = typeof window !== "undefined";
 const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect;
 
-export function createStore<T extends any>(
+export function createStore<T extends object>(
 	classConstructor: ClassType<T>,
 	...args: any[]
 ): [StoreProvider, () => T, () => T] {
@@ -22,7 +22,7 @@ export function createStore<T extends any>(
 	};
 
 	const initialize = (state: T): T => {
-		const newInst = new classConstructor(...args) as any;
+		const newInst = new classConstructor(...args);
 		for (const [key, value] of Object.entries(newInst)) {
 			if (typeof value === "function" || key === "_oocontext") continue;
 			state[key] = value;
@@ -30,10 +30,22 @@ export function createStore<T extends any>(
 		return state;
 	};
 
+	const update = (state: T, payload: T): T => {
+		const updates = {};
+		for (const [key, value] of Object.entries(payload)) {
+			if (typeof value === "function" || key === "_oocontext") continue;
+			updates[key] = value;
+		}
+		return {
+			...state,
+			...updates,
+		};
+	};
+
 	const reducer = (state: T, action: ActionEvent<T>): T => {
 		switch (action.type) {
 			case ActionType.Bound:
-				return { ...(action.payload as any) } as T; // payload is inst, as "this"
+				return update(state, action.payload as any);
 
 			case ActionType.Reset:
 				return initialize(state);

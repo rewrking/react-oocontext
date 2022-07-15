@@ -116,6 +116,10 @@ export function BaseState<T extends ClassType>(options?: BaseStateOptions) {
 
 								return result;
 							};
+						} else {
+							throw new TypeError(
+								`@Action decorator can only be applied to class methods, not ${typeof method}`
+							);
 						}
 					}
 					delete (this.constructor as any).actions;

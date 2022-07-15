@@ -26,12 +26,12 @@ class CounterState {
     }
 
     @Action
-    increase = (amount: number) => {
+    increase(amount: number) { // class method
         if (this.count + amount <= this.max) this.count += amount;
     };
 
     @Action
-    decrease = (amount: number) => {
+    decrease = (amount: number) => { // function property
         if (this.count - amount >= this.min) this.count -= amount;
     };
 }
