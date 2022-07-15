@@ -16,6 +16,10 @@ jobs:
         with:
           node-version: "16.x"
           registry-url: "https://registry.npmjs.org/"
+      - name: "⚒️ Build"
+        run: |
+          npm install
+          npm run build
       - name: "🧹 Remove development files"
         run: rm -rf node_modules src .vscode .github tsconfig.json tsconfig-cjs.json .prettierrc push_version.sh
       - name: "🚀 Publish"
