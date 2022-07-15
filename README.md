@@ -7,7 +7,7 @@ Under the hood, this uses React's `useReducer` hook, along with the React contex
 
 | Import | Description |
 | --------- | ----------- |
-| `BaseState` | An abstract base class for creating easy to read MobX-style states that utilize React Hooks/Context under the hood (i.e. no proxy objects that get in the way of you and your data, especially during debugging) |
+| `BaseState` | A decorator for creating easy to read MobX-style states that utilize React Hooks/Context under the hood (i.e. no proxy objects that get in the way of you and your data, especially during debugging) |
 | `Action` | A decorator for declaring state actions. Also works with promises |
 | `createStore` | A method that creates a store out of a state class |
 | `makeRootStoreProvider` | (optional) A method that takes in a number of store providers and returns a nested provider (less tedious than nesting them manually) |
@@ -17,7 +17,8 @@ Example 1: Define a state class
 ```ts
 import { BaseState, Action } from "react-oocontext";
 
-class CounterState extends BaseState {
+@BaseState()
+class CounterState {
     count: number = 0;
 
     constructor(public min: number = 0, public max: number = 10) {

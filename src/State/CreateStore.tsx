@@ -1,6 +1,5 @@
 import React, { useReducer, useContext, useEffect, useLayoutEffect, PropsWithChildren } from "react";
 
-import { BaseState } from "./BaseState";
 import { ClassType, Optional } from "../Types";
 import { ActionEvent, ActionType } from "./ActionType";
 
@@ -9,7 +8,7 @@ export type StoreProvider = (props: PropsWithChildren<object>) => JSX.Element;
 const canUseDOM = typeof window !== "undefined";
 const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect;
 
-export function createStore<T extends BaseState>(
+export function createStore<T extends any>(
 	classConstructor: ClassType<T>,
 	...args: any[]
 ): [StoreProvider, () => T, () => T] {
@@ -23,7 +22,7 @@ export function createStore<T extends BaseState>(
 	};
 
 	const initialize = (state: T): T => {
-		const newInst = new classConstructor(...args);
+		const newInst = new classConstructor(...args) as any;
 		for (const [key, value] of Object.entries(newInst)) {
 			if (typeof value === "function" || key === "_oocontext") continue;
 			state[key] = value;
@@ -34,7 +33,7 @@ export function createStore<T extends BaseState>(
 	const reducer = (state: T, action: ActionEvent<T>): T => {
 		switch (action.type) {
 			case ActionType.Bound:
-				return { ...action.payload } as T; // payload is inst, as "this"
+				return { ...(action.payload as any) } as T; // payload is inst, as "this"
 
 			case ActionType.Reset:
 				return initialize(state);
@@ -49,7 +48,6 @@ export function createStore<T extends BaseState>(
 			(getValue() as any)._oocontext.dispatcher = dispatcher;
 
 			return () => {
-				(getValue() as any)._oocontext.dispatcher = null;
 				ctx = null;
 			};
 			// eslint-disable-next-line

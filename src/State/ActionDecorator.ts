@@ -3,10 +3,6 @@ type BabelPropertyDescriptor<T> = TypedPropertyDescriptor<T> & {
 };
 
 function Action<T>(target: any, key: string, descriptor?: BabelPropertyDescriptor<T>): any {
-	if (!descriptor) {
-		throw new Error(`@Action: descriptor was not found`);
-	}
-
 	if (descriptor && descriptor.value === undefined && descriptor.initializer === undefined) {
 		throw new Error(`@Action decorator can only be applied to arrow functions (for now)`);
 	}
@@ -44,7 +40,7 @@ function Action<T>(target: any, key: string, descriptor?: BabelPropertyDescripto
 			},
 		} as any;
 	} else {
-		let value: any = target[key];
+		/*let value: any = target[key];
 		if (value && typeof value !== "function") {
 			throw new TypeError(`@Action decorator can only be applied to arrow functions, not ${typeof value}`);
 		}
@@ -86,7 +82,14 @@ function Action<T>(target: any, key: string, descriptor?: BabelPropertyDescripto
 				}
 				return patchedFunc;
 			},
-		};
+		};*/
+
+		if (target.constructor.actions === undefined) {
+			target.constructor.actions = [];
+		}
+		if (!target.constructor.actions.includes(key)) {
+			target.constructor.actions.push(key);
+		}
 	}
 }
 
